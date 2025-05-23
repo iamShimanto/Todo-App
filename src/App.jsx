@@ -1,5 +1,13 @@
 import { useEffect, useState } from "react";
-import { getDatabase, onValue, push, ref, remove, set, update } from "firebase/database";
+import {
+  getDatabase,
+  onValue,
+  push,
+  ref,
+  remove,
+  set,
+  update,
+} from "firebase/database";
 
 function App() {
   const db = getDatabase();
@@ -9,8 +17,8 @@ function App() {
   const [isEdit, setIsEdit] = useState(false);
   const [editedValue, setEditedValue] = useState({
     todoitem: "",
-    id : ""
-  })
+    id: "",
+  });
 
   const handleSubmit = () => {
     if (data) {
@@ -22,15 +30,18 @@ function App() {
 
   const handleEnableEdit = (data) => {
     setIsEdit(true);
-    setEditedValue(data)
-  }
-  
+    setEditedValue(data);
+    setDataErr("");
+  };
+
   const handleUpdate = () => {
-    update(ref(db, "todolist/" + editedValue.id), {
-      todoitem : editedValue.todoitem
-    })
-    setIsEdit(false)
-  }
+    if (!(editedValue.todoitem == "")) {
+      update(ref(db, "todolist/" + editedValue.id), {
+        todoitem: editedValue.todoitem,
+      });
+      setIsEdit(false);
+    }
+  };
 
   useEffect(() => {
     onValue(ref(db, "todolist/"), (snapshot) => {
@@ -40,12 +51,11 @@ function App() {
       });
       setTodoList(arr);
     });
-  }, []);
+  }, [db]);
 
   const handleDelete = (data) => {
-    remove(ref(db, "todolist/" + data.id))
-  }
-
+    remove(ref(db, "todolist/" + data.id));
+  };
 
   const handleSubmitForm = (e) => {
     e.preventDefault();
@@ -58,64 +68,54 @@ function App() {
   };
 
   return (
-    <>
-      <h1 className="text-5xl text-center my-10 text-pink-700 font-semibold tracking-widest">
-        ToDo List
-      </h1>
-      <form onSubmit={handleSubmitForm} className="w-fit mx-auto flex items-center gap-2.5">
-        {dataErr && (
-          <p className="text-center py-2 text-red-500 font-semibold tracking-[1px]">
-            {dataErr}
-          </p>
-        )}
+    <div className="main">
+      <div className="heading">
+        <h1>ToDo List</h1>
+        <h2>Total: {todoList.length}</h2>
+      </div>
+      <form onSubmit={handleSubmitForm}>
+        {dataErr && <p>{dataErr}</p>}
         <input
-          className="outline-none border-2 border-black text-center focus:border-red-600 w-70 h-10 mx-auto text-lg text-yellow-500"
           type="text"
           onChange={(e) => {
-            isEdit ? setEditedValue((prev)=> ({...prev, todoitem : e.target.value})) : setData(e.target.value), setDataErr("")
+            isEdit
+              ? setEditedValue((prev) => ({
+                  ...prev,
+                  todoitem: e.target.value,
+                }))
+              : setData(e.target.value),
+              setDataErr("");
           }}
           value={isEdit ? editedValue.todoitem : data}
         />
-        {
-          isEdit 
-          ?
-         <>
-           <button
-          onClick={handleUpdate}
-          className="py-2.5 px-5 bg-black w-fit text-white mx-auto my-5 rounded-lg cursor-pointer hover:bg-white hover:text-black ease-in-out duration-300 focus:border font-medium text-lg"
-        >
-          update
-        </button>
-        <button
-          onClick={()=> setIsEdit(false)}
-          className="py-2.5 px-5 bg-black w-fit text-white mx-auto my-5 rounded-lg cursor-pointer hover:bg-white hover:text-black ease-in-out duration-300 focus:border font-medium text-lg"
-        >
-          Cancel
-        </button>
-         </>
-          :
-          <button
-          onClick={handleSubmit}
-          className="py-2.5 px-5 bg-black w-fit text-white mx-auto my-5 rounded-lg cursor-pointer hover:bg-white hover:text-black ease-in-out duration-300 focus:border font-medium text-lg"
-        >
-          Submit
-        </button>
-        }
-        
+        {isEdit ? (
+          <>
+            <button onClick={handleUpdate}>update</button>
+            <button onClick={() => setIsEdit(false)}>
+              Cancel
+            </button>
+          </>
+        ) : (
+          <button onClick={handleSubmit}>Submit</button>
+        )}
       </form>
 
-      <ul className="w-fit translate-x-30 text-start mx-auto text-2xl font-semibold underline uppercase">
+      <ul>
         {todoList.map((item) => (
-          <li key={item.id} className="list-disc my-3">
+          <li key={item.id}>
             {item.todoitem}
-            <button className="py-2.5 px-5 bg-black text-white w-fit rounded-lg hover:bg-white hover:text-black border duration-300 ml-7 mr-4"
-            onClick={() => handleEnableEdit(item)}>Edit</button>
-            <button className="py-2.5 px-5 bg-black text-white w-fit rounded-lg hover:bg-white hover:text-black border duration-300 mr-4"
-            onClick={()=> handleDelete(item)}>Delete</button>
+            <div>
+              <button className="btn" onClick={() => handleEnableEdit(item)}>
+                Edit
+              </button>
+              <button className="btn" onClick={() => handleDelete(item)}>
+                Delete
+              </button>
+            </div>
           </li>
         ))}
       </ul>
-    </>
+    </div>
   );
 }
 
