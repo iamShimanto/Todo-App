@@ -13,7 +13,7 @@ function App() {
   const db = getDatabase();
   const [data, setData] = useState("");
   const [dataErr, setDataErr] = useState("");
-  const [editDataErr, setEditDataErr] = useState("")
+  const [editDataErr, setEditDataErr] = useState("");
   const [todoList, setTodoList] = useState([]);
   const [isEdit, setIsEdit] = useState(false);
   const [editedValue, setEditedValue] = useState({
@@ -88,7 +88,6 @@ function App() {
         />
         <button onClick={handleSubmit}>Submit</button>
       </form>
-
       <ul>
         {todoList.map((item) => (
           <li key={item.id}>
