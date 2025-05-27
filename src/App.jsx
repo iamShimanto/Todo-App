@@ -88,52 +88,54 @@ function App() {
         />
         <button onClick={handleSubmit}>Submit</button>
       </form>
-      <ul>
-        {todoList.map((item) => (
-          <li key={item.id}>
-            {isEdit && editedValue.id === item.id ? (
-              <input
-                className="editInput"
-                type="text"
-                onChange={(e) =>
-                  setEditedValue((prev) => ({
-                    ...prev,
-                    todoitem: e.target.value,
-                  }))
-                }
-                value={editedValue.todoitem}
-                placeholder={editDataErr}
-              />
-            ) : (
-              item.todoitem
-            )}
-            <div>
+      {todoList.length > 0 && (
+        <ul>
+          {todoList.map((item) => (
+            <li key={item.id}>
               {isEdit && editedValue.id === item.id ? (
-                <>
-                  <button className="btn" onClick={handleUpdate}>
-                    update
-                  </button>
-                  <button className="btn" onClick={() => setIsEdit(false)}>
-                    Cancel
-                  </button>
-                </>
+                <input
+                  className="editInput"
+                  type="text"
+                  onChange={(e) =>
+                    setEditedValue((prev) => ({
+                      ...prev,
+                      todoitem: e.target.value,
+                    }))
+                  }
+                  value={editedValue.todoitem}
+                  placeholder={editDataErr}
+                />
               ) : (
-                <div>
-                  <button
-                    className="btn"
-                    onClick={() => handleEnableEdit(item)}
-                  >
-                    Edit
-                  </button>
-                  <button className="btn" onClick={() => handleDelete(item)}>
-                    Delete
-                  </button>
-                </div>
+                item.todoitem
               )}
-            </div>
-          </li>
-        ))}
-      </ul>
+              <div>
+                {isEdit && editedValue.id === item.id ? (
+                  <>
+                    <button className="btn" onClick={handleUpdate}>
+                      update
+                    </button>
+                    <button className="btn" onClick={() => setIsEdit(false)}>
+                      Cancel
+                    </button>
+                  </>
+                ) : (
+                  <div>
+                    <button
+                      className="btn"
+                      onClick={() => handleEnableEdit(item)}
+                    >
+                      Edit
+                    </button>
+                    <button className="btn" onClick={() => handleDelete(item)}>
+                      Delete
+                    </button>
+                  </div>
+                )}
+              </div>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }
