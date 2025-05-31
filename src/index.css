@@ -60,7 +60,7 @@ h2 {
   @apply outline-none border-[5px] border-black focus:border-white duration-300 w-180 h-20 text-center font-roboto text-3xl font-semibold text-white rounded-2xl mt-10;
 }
 .editInput{
-  @apply outline-none border-b-[5px] border-black focus:border-b-white duration-300 w-180 h-16 font-roboto text-3xl font-semibold text-[rgba(23,39,185,0.73)]
+  @apply outline-none border-b-[5px] border-black focus:border-b-white duration-300 w-180 h-16 font-roboto text-3xl font-semibold text-green-500
 }
 button {
   @apply px-10 py-5 bg-black text-white font-roboto text-3xl font-semibold rounded-2xl cursor-pointer hover:bg-white hover:text-black border-[5px] border-black duration-300 mx-2;

@@ -54,7 +54,7 @@ function App() {
       });
       setTodoList(arr);
     });
-  }, [db]);
+  }, []);
 
   const handleDelete = (data) => {
     remove(ref(db, "todolist/" + data.id));
@@ -109,28 +109,22 @@ function App() {
                 item.todoitem
               )}
               <div>
-                {isEdit && editedValue.id === item.id ? (
-                  <>
-                    <button className="btn" onClick={handleUpdate}>
-                      update
-                    </button>
-                    <button className="btn" onClick={() => setIsEdit(false)}>
-                      Cancel
-                    </button>
-                  </>
-                ) : (
-                  <div>
-                    <button
-                      className="btn"
-                      onClick={() => handleEnableEdit(item)}
-                    >
-                      Edit
-                    </button>
-                    <button className="btn" onClick={() => handleDelete(item)}>
-                      Delete
-                    </button>
-                  </div>
-                )}
+                <button
+                  className="btn"
+                  onClick={() =>
+                    isEdit ? handleUpdate() : handleEnableEdit(item)
+                  }
+                >
+                  {isEdit && editedValue.id === item.id ? "update" : "edit"}
+                </button>
+                <button
+                  className="btn"
+                  onClick={() =>
+                    isEdit ? setIsEdit(false) : handleDelete(item)
+                  }
+                >
+                  {isEdit && editedValue.id === item.id ? "Cancel" : "Delete"}
+                </button>
               </div>
             </li>
           ))}
