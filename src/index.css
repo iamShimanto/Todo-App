@@ -84,3 +84,7 @@ input::placeholder{
   opacity: 1;
   @apply translate-x-0 capitalize
 }
+
+.updateInput::placeholder{
+  font-size: 14px;
+}

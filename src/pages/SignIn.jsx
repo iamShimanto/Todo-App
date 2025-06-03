@@ -92,7 +92,9 @@ const SignIn = () => {
                 )}
               </div>
             </div>
-
+            <div className="flex justify-end text-[#7289DA]">
+              <Link to="/reset">Forgot Password</Link>
+            </div>
             <button
               type="submit"
               className="w-full py-4 bg-[#7289DA] text-white rounded-lg font-semibold hover:bg-[#5869a6] transform transition-all hover:scale-[1.02] focus:scale-[0.98] active:scale-[0.98] cursor-pointer"

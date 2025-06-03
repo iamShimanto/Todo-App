@@ -2,6 +2,7 @@ import {
   deleteUser,
   getAuth,
   onAuthStateChanged,
+  sendPasswordResetEmail,
   signOut,
   updateProfile,
 } from "firebase/auth";
@@ -14,6 +15,7 @@ const Profile = () => {
   const auth = getAuth();
   const navigate = useNavigate();
   const [isEdit, setIsEdit] = useState(false);
+  const [updateErr, setUpdateErr] = useState("");
   const [updateName, setUpdateName] = useState({
     username: "",
   });
@@ -72,37 +74,49 @@ const Profile = () => {
 
   //============ update username
   const handleUpdate = () => {
-    updateProfile(auth.currentUser, {
-      displayName: updateName.username,
-    }).then(() => {
-      toast.success("Username Updating!");
-      setTimeout(() => {
-        navigate("/todo");
-      }, 2000);
+    if (updateName.username) {
+      updateProfile(auth.currentUser, {
+        displayName: updateName.username,
+      }).then(() => {
+        toast.success("Username Updating!");
+        setTimeout(() => {
+          navigate("/todo");
+        }, 2000);
+      });
+      setIsEdit(false);
+    } else {
+      setUpdateErr("Enter Your Valid Name!");
+    }
+  };
+
+  // ======== reset password
+  const handleReset = () => {
+    sendPasswordResetEmail(auth, user.email).then(() => {
+      toast.success("Password Reset Email Sent!")
     });
-    setIsEdit(false);
   };
 
   return (
     <div>
-      <div className="h-screen w-dvw flex items-center justify-center bg-[#0F1012] px-50 z-50">
+      <div className="h-screen w-dvw flex items-center justify-center bg-[#0F1012] px-50 z-10">
         <ToastContainer position="top-right" autoClose={2000} />
-        <div className="bg-[#16181C] p-8 rounded-xl shadow-2xl w-full max-w-md transform transition-all hover:scale-[1.01]">
+        <div className="bg-[#16181C] p-8 rounded-xl shadow-2xl w-full max-w-xl transform transition-all hover:scale-[1.01]">
           <div className="mb-8 text-center">
             <h2 className="text-4xl font-bold text-[#7289DA] mb-2">Profile</h2>
           </div>
           <div>
             <img
               className="w-20 h-20 rounded-full mx-auto"
-              src="images/default.png"
+              src={user.photo}
               alt="profile"
             />
             {isEdit ? (
               <div className="flex justify-center gap-2 my-4.5">
                 <input
-                  className="text-white border outline-0 text-base font-semibold placeholder:text-sm text-center rounded-lg"
+                  className="text-white border outline-0 text-base font-semibold placeholder:text-sm text-center rounded-lg updateInput"
                   type="text"
                   value={updateName.username}
+                  placeholder={updateErr}
                   onChange={(e) =>
                     setUpdateName((prev) => ({
                       ...prev,
@@ -112,7 +126,7 @@ const Profile = () => {
                 />
                 <button
                   onClick={handleUpdate}
-                  className="px-2 py-1 bg-black text-white cursor-pointer hover:bg-white hover:text-black duration-300 rounded-lg"
+                  className="px-2 py-1 bg-black text-white cursor-pointer hover:bg-white hover:text-black duration-300 rounded-lg z-50"
                 >
                   Update
                 </button>
@@ -132,12 +146,18 @@ const Profile = () => {
                 />
               </h2>
             )}
-            <div className="flex justify-center items-center gap-3">
+            <div className="flex justify-center items-center gap-1">
               <button
                 onClick={handleLogout}
                 className="px-4 py-2 bg-black text-white rounded-lg cursor-pointer hover:bg-white hover:text-black duration-300"
               >
                 Log Out
+              </button>
+              <button
+                onClick={handleReset}
+                className="px-4 py-2 bg-black text-white rounded-lg cursor-pointer hover:bg-white hover:text-black duration-300"
+              >
+                Reset Password
               </button>
               <button
                 onClick={handleDeleteUser}

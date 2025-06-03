@@ -27,7 +27,7 @@ const Register = () => {
       .then(() => {
         updateProfile(auth.currentUser, {
           displayName: user.username,
-          photoURL: "images/default.png",
+          photoURL: "images/bg.jpg",
         })
           .then(() => {
             sendEmailVerification(auth.currentUser).then(() => {

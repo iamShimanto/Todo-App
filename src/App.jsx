@@ -5,6 +5,7 @@ import Register from './pages/SignUp.jsx'
 import SignIn from './pages/SignIn.jsx'
 import Error from './pages/Error.jsx'
 import Profile from './pages/Profile.jsx'
+import Reset from './pages/Reset.jsx'
 
 const App = () => {
   return (
@@ -14,7 +15,8 @@ const App = () => {
           <Route index element={<SignIn/>}/>
           <Route path='/todo' element={<Home />} />
           <Route path='/signup' element={<Register />} />
-          <Route path="/profile" element={<Profile/>}/>
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/reset" element={<Reset/>}/>
           <Route path='*' element={<Error/>}/>
         </Routes>
       </BrowserRouter>

@@ -127,7 +127,7 @@ const Home = () => {
           {user.username}
         </h2>
       </Link>
-      <div className="heading mb-15">
+      <div className="heading">
         <h1>ToDo List</h1>
         <h2 className=" w-50 h-50 bg-white rounded-full flex justify-center items-center text-3xl font-roboto font-medium translate-x-30">
           Total: {todoList.length}
