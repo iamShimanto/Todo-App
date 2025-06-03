@@ -1,12 +1,77 @@
-# React + Vite
+<div align='center'>
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<h1>ToDo App</h1>
+<h4> <a href=https://todo-app-rho-eight-49.vercel.app/>View Demo</a> <span> · </span> <a href="https://github.com/I-Am-Shimanto/Todo-App/blob/master/README.md"> Documentation </a> <span> · </span> <a href="https://github.com/I-Am-Shimanto/Todo-App/issues"> Report Bug </a> <span> · </span> <a href="https://github.com/I-Am-Shimanto/Todo-App/issues"> Request Feature </a> </h4>
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+</div>
 
-## Expanding the ESLint configuration
+# :notebook_with_decorative_cover: Table of Contents
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- [About the Project](#star2-about-the-project)
+- [Roadmap](#compass-roadmap)
+- [License](#warning-license)
+- [Contact](#handshake-contact)
+
+
+## :star2: About the Project
+<details> <summary>Database</summary> <ul>
+<li><a href="firebase.google.com">Firebase</a></li>
+</ul> </details>
+
+### :dart: Features
+- Add Task
+- Edit Task
+- Delete Task
+
+
+## :toolbox: Getting Started
+
+### :gear: Installation
+
+
+```bash
+npm install
+```
+
+
+### :test_tube: Running Tests
+
+
+```bash
+npm run dev
+```
+
+
+### :running: Run Locally
+
+Clone the project
+
+```bash
+https://github.com/I-Am-Shimanto/Todo-App
+```
+Go to the project directory
+```bash
+cd Todo-App
+```
+Install dependencies
+```bash
+npm install
+```
+Start the server
+```bash
+npm run dev
+```
+
+
+## :compass: Roadmap
+
+* [x] Todo JS
+
+
+
+## :handshake: Contact
+
+Shimanto Sarkar - - shimanto925pabna@gmail.com
+
+Project Link: [https://github.com/I-Am-Shimanto/Todo-App](https://github.com/I-Am-Shimanto/Todo-App)
