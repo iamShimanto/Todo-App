@@ -7,44 +7,42 @@ import { toast, ToastContainer } from "react-toastify";
 
 const SignIn = () => {
   const auth = getAuth();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(true);
   const [user, setUser] = useState({
     email: "",
-    password : ""
+    password: "",
   });
 
   const handleSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
     signInWithEmailAndPassword(auth, user.email, user.password)
       .then((res) => {
         if (res.user.emailVerified === false) {
-          toast.error("Email isn't verified!")
+          toast.error("Email isn't verified!");
         } else {
-          toast.success("Sign In Successfull!")
-          navigate("/todo")
+          toast.success("Sign In Successfull!");
+          setTimeout(() => {
+            navigate("/todo");
+          }, 2000);
         }
-          
-        
-       
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        console.log(errorMessage)
+        console.log(errorMessage);
         if (errorCode === "auth/invalid-email") {
-          toast.error("Enter Your Valid Email!")
+          toast.error("Enter Your Valid Email!");
         }
         if (errorCode === "auth/missing-password") {
-          toast.error("Enter Your Password!")
+          toast.error("Enter Your Password!");
         }
         if (errorCode === "auth/invalid-credential") {
-          toast.error("Wrong Password!")
+          toast.error("Wrong Password!");
         }
       });
-  }
-
+  };
 
   return (
     <>
