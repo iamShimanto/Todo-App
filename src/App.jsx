@@ -3,6 +3,7 @@ import Home from './pages/Home.jsx'
 import { BrowserRouter, Route, Routes } from 'react-router'
 import Register from './pages/SignUp.jsx'
 import SignIn from './pages/SignIn.jsx'
+import Error from './pages/Error.jsx'
 
 const App = () => {
   return (
@@ -11,7 +12,8 @@ const App = () => {
         <Routes>
           <Route index element={<SignIn/>}/>
           <Route path='/todo' element={<Home />} />
-          <Route path='/signup' element={<Register/>}/>
+          <Route path='/signup' element={<Register />} />
+          <Route path='*' element={<Error/>}/>
         </Routes>
       </BrowserRouter>
     </>
