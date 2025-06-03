@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
 import {
-  deleteUser,
   getAuth,
   onAuthStateChanged,
-  signOut,
 } from "firebase/auth";
 import {
   getDatabase,
@@ -14,13 +12,14 @@ import {
   set,
   update,
 } from "firebase/database";
-import { toast, ToastContainer } from "react-toastify";
-import { useNavigate } from "react-router";
+import { Link } from "react-router";
+import { FaRegEdit, FaSave } from "react-icons/fa";
+import { RiDeleteBin6Line } from "react-icons/ri";
+import { MdCancel } from "react-icons/md";
 
 const Home = () => {
   const db = getDatabase();
   const auth = getAuth();
-  const navigate = useNavigate();
   const [data, setData] = useState("");
   const [dataErr, setDataErr] = useState("");
   const [editDataErr, setEditDataErr] = useState("");
@@ -37,6 +36,8 @@ const Home = () => {
     email: "",
     photo: "",
   });
+
+  // ============= user data 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -50,29 +51,7 @@ const Home = () => {
     });
   }, []);
 
-  const handleDeleteUser = () => {
-    const user = auth.currentUser;
-    deleteUser(user)
-      .then(() => {
-        toast.success("Account Deleted Successfully!");
-        setTimeout(() => {
-          navigate("/");
-        }, 2000);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  const handleLogout = () => {
-    signOut(auth).then(() => {
-      toast.success("LogOut Successfull!");
-      setTimeout(() => {
-        navigate("/");
-      }, 2000);
-    });
-  };
-
+  //============ data write
   const handleSubmit = () => {
     if (data) {
       set(push(ref(db, "todolist/")), {
@@ -82,12 +61,14 @@ const Home = () => {
     }
   };
 
+  // =========== enable edit
   const handleEnableEdit = (data) => {
     setIsEdit(true);
     setEditedValue(data);
     setDataErr("");
   };
 
+  // ============== data update
   const handleUpdate = () => {
     if (!(editedValue.todoitem == "")) {
       update(ref(db, "todolist/" + editedValue.id), {
@@ -99,6 +80,7 @@ const Home = () => {
     }
   };
 
+  // ============ data read
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       onValue(ref(db, "todolist/"), (snapshot) => {
@@ -114,10 +96,11 @@ const Home = () => {
   }, []);
 
 
-  // console.log(user.ema)
+// =========== data delete
   const handleDelete = (data) => {
     remove(ref(db, "todolist/" + data.id));
   };
+
 
   const handleSubmitForm = (e) => {
     e.preventDefault();
@@ -131,24 +114,24 @@ const Home = () => {
 
   return (
     <div className="main relative">
-      <ToastContainer position="top-right" autoClose={2000} />
-      <div className="absolute top-3 left-10 flex flex-col items-center">
-        <img className="w-20 h-20 rounded-full" src={user.photo} alt="user" />
-        <h3 className="capitalize text-2xl font-semibold text-white font-roboto">
+      <Link
+        to="/profile"
+        className="profile absolute top-10 left-10 cursor-pointer rounded-full flex items-center gap-2.5"
+      >
+        <img
+          className="w-15 h-15 rounded-full"
+          src={user.photo}
+          alt="profile"
+        />
+        <h2 className="username overflow-hidden opacity-0 duration-300 -translate-x-15 capitalize font-roboto font-semibold text-2xl text-white">
           {user.username}
-        </h3>
-        <button
-          onClick={handleLogout}
-          className="px-4 py-2 bg-black text-white rounded-lg cursor-pointer border-[5px] border-black hover:bg-white hover:text-black duration-300"
-        >
-          LogOut
-        </button>
-      </div>
-      <button onClick={handleDeleteUser} className="btn absolute top-3 right-6">
-        Delete Accout
-      </button>
+        </h2>
+      </Link>
       <div className="heading mb-15">
         <h1>ToDo List</h1>
+        <h2 className=" w-50 h-50 bg-white rounded-full flex justify-center items-center text-3xl font-roboto font-medium translate-x-30">
+          Total: {todoList.length}
+        </h2>
       </div>
       <form onSubmit={handleSubmitForm}>
         <input
@@ -161,7 +144,7 @@ const Home = () => {
           placeholder={dataErr}
         />
         <button className="button" onClick={handleSubmit}>
-          Submit
+          <FaSave />
         </button>
       </form>
       {todoList.length > 0 && (
@@ -192,7 +175,11 @@ const Home = () => {
                       isEdit ? handleUpdate() : handleEnableEdit(item)
                     }
                   >
-                    {isEdit && editedValue.id === item.id ? "update" : "edit"}
+                    {isEdit && editedValue.id === item.id ? (
+                      <FaSave />
+                    ) : (
+                      <FaRegEdit />
+                    )}
                   </button>
                   <button
                     className="btn"
@@ -200,7 +187,11 @@ const Home = () => {
                       isEdit ? setIsEdit(false) : handleDelete(item)
                     }
                   >
-                    {isEdit && editedValue.id === item.id ? "Cancel" : "Delete"}
+                    {isEdit && editedValue.id === item.id ? (
+                      <MdCancel />
+                    ) : (
+                      <RiDeleteBin6Line />
+                    )}
                   </button>
                 </div>
               )}
