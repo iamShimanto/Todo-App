@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
-import { deleteUser, getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import {
+  deleteUser,
+  getAuth,
+  onAuthStateChanged,
+  signOut,
+} from "firebase/auth";
 import {
   getDatabase,
   onValue,
@@ -32,7 +37,6 @@ const Home = () => {
     email: "",
     photo: "",
   });
-
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -61,14 +65,13 @@ const Home = () => {
   };
 
   const handleLogout = () => {
-    signOut(auth)
-      .then(() => {
-        toast.success("LogOut Successfull!")
-        setTimeout(() => {
-          navigate("/")
-        }, 2000);
-      })
-  }
+    signOut(auth).then(() => {
+      toast.success("LogOut Successfull!");
+      setTimeout(() => {
+        navigate("/");
+      }, 2000);
+    });
+  };
 
   const handleSubmit = () => {
     if (data) {
@@ -97,15 +100,21 @@ const Home = () => {
   };
 
   useEffect(() => {
-    onValue(ref(db, "todolist/"), (snapshot) => {
-      let arr = [];
-      snapshot.forEach((item) => {
-        arr.push({ ...item.val(), id: item.key });
+    onAuthStateChanged(auth, (user) => {
+      onValue(ref(db, "todolist/"), (snapshot) => {
+        let arr = [];
+        snapshot.forEach((item) => {
+          if (item.val().email === user.email) {
+            arr.push({ ...item.val(), id: item.key });
+          }
+        });
+        setTodoList(arr);
       });
-      setTodoList(arr);
     });
   }, []);
 
+
+  // console.log(user.ema)
   const handleDelete = (data) => {
     remove(ref(db, "todolist/" + data.id));
   };
