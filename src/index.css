@@ -16,7 +16,6 @@ body {
   min-height: 100vh;
   display: flex;
   justify-content: center;
-  padding-top: 50px;
   -webkit-backdrop-filter: blur(50px);
   backdrop-filter: blur(20px);
   filter: grayscale(0.4);
@@ -31,7 +30,7 @@ body {
   text-align: center;
   min-width: 1300px;
 }
-ul {
+.ul {
   min-width: 1000px;
   background-color: rgba(255, 255, 255, 0.4);
   -webkit-backdrop-filter: blur(5px);
@@ -51,7 +50,7 @@ ul {
 h1 {
   @apply text-6xl font-bold font-roboto text-white leading-20 tracking-[7px];
 }
-h2 {
+.length {
   -webkit-backdrop-filter: blur(5px);
   backdrop-filter: blur(5px);
   @apply w-50 h-50 bg-white rounded-full flex justify-center items-center text-3xl font-roboto font-medium translate-x-30;
@@ -62,7 +61,7 @@ h2 {
 .editInput{
   @apply outline-none border-b-[5px] border-black focus:border-b-white duration-300 w-180 h-16 font-roboto text-3xl font-semibold text-green-500
 }
-button {
+.button {
   @apply px-10 py-5 bg-black text-white font-roboto text-3xl font-semibold rounded-2xl cursor-pointer hover:bg-white hover:text-black border-[5px] border-black duration-300 mx-2;
 }
 
@@ -70,14 +69,12 @@ li {
   @apply my-2 min-w-200 flex justify-between items-center;
 }
 .btn {
-  @apply px-7 py-3.5 text-xl mx-1;
+  @apply px-7 py-3.5 text-xl mx-1 bg-black text-white font-roboto font-semibold rounded-2xl cursor-pointer hover:bg-white hover:text-black  border-[5px] border-black duration-300;
 }
 form {
   @apply relative;
 }
-p {
-  @apply absolute left-60 font-semibold font-roboto text-xl text-white;
-}
+
 input::placeholder{
   @apply text-red-500 text-2xl
 }
