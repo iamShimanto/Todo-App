@@ -8,7 +8,7 @@ import {
   GithubAuthProvider,
   GoogleAuthProvider,
   sendEmailVerification,
-  signInWithPopup,
+  // signInWithPopup,
   updateProfile,
 } from "firebase/auth";
 import { toast, ToastContainer } from "react-toastify";
@@ -22,8 +22,8 @@ const Register = () => {
     password: "",
   });
   const auth = getAuth();
-  const provider = new GoogleAuthProvider();
-  const githubProvider = new GithubAuthProvider();
+  // const provider = new GoogleAuthProvider();
+  // const githubProvider = new GithubAuthProvider();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -61,25 +61,25 @@ const Register = () => {
       });
   };
   // ============== google sign up
-  const handleGoogle = () => {
-    signInWithPopup(auth, provider).then(() => {
-      navigate("/todo");
-    });
-  };
+  // const handleGoogle = () => {
+  //   signInWithPopup(auth, provider).then(() => {
+  //     navigate("/todo");
+  //   });
+  // };
 
   // ============= github sign up
-  const handleGithub = () => {
-    signInWithPopup(auth, githubProvider)
-      .then(() => {
-        navigate("/todo");
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        if (errorCode === "auth/account-exists-with-different-credential") {
-          toast.error("This Email is already Exist!");
-        }
-      });
-  };
+  // const handleGithub = () => {
+  //   signInWithPopup(auth, githubProvider)
+  //     .then(() => {
+  //       navigate("/todo");
+  //     })
+  //     .catch((error) => {
+  //       const errorCode = error.code;
+  //       if (errorCode === "auth/account-exists-with-different-credential") {
+  //         toast.error("This Email is already Exist!");
+  //       }
+  //     });
+  // };
 
   return (
     <div className="h-screen w-dvw flex items-center justify-center bg-[#0F1012] px-50 z-50">
@@ -169,7 +169,7 @@ const Register = () => {
 
         <div className="flex items-center justify-center gap-5">
           <button
-            onClick={handleGithub}
+            // onClick={handleGithub}
             className="group relative mt-4 cursor-pointer outline-none border-none rounded-full flex flex-row items-center justify-center h-10 w-10 hover:!w-[100px] transition-all duration-[0.75s] before:content-[''] before:absolute before:w-full before:h-full before:inset-0 before:bg-[linear-gradient(130deg,#7209d4,#2832d4_33%,#00a5b2)] before:ring-4 before:ring-offset-4 before:ring-[#2832d4] before:rounded-full before:transition before:duration-300 before:ring-offset-[#fff] hover:before:scale-105 active:before:scale-95 text-white"
           >
             <svg
@@ -185,7 +185,9 @@ const Register = () => {
               Github
             </span>
           </button>
-          <button onClick={handleGoogle} className="signin mt-4">
+          <button
+            // onClick={handleGoogle}
+            className="signin mt-4">
             <svg
               viewBox="0 0 256 262"
               preserveAspectRatio="xMidYMid"
