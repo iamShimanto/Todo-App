@@ -95,7 +95,6 @@ const Home = () => {
     });
   }, []);
 
-
 // =========== data delete
   const handleDelete = (data) => {
     remove(ref(db, "todolist/" + data.id));
