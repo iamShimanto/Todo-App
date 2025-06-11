@@ -6,7 +6,6 @@ import SignIn from './pages/SignIn.jsx'
 import Error from './pages/Error.jsx'
 import Profile from './pages/Profile.jsx'
 import Reset from './pages/Reset.jsx'
-import Admin from './pages/admin/Admin.jsx'
 
 const App = () => {
   return (
@@ -19,7 +18,6 @@ const App = () => {
           <Route path="/profile" element={<Profile />} />
           <Route path="/reset" element={<Reset/>}/>
           <Route path='*' element={<Error />} />
-          <Route path='/admintodo' element={<Admin/>}/>
         </Routes>
       </BrowserRouter>
     </>

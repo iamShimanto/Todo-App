@@ -19,7 +19,8 @@ const Reset = () => {
           navigate("/");
         }, 2000);
       })
-      .catch(() => {
+      .catch((error) => {
+        console.log(error)
         toast.error("Enter Your Email!");
       });
   };
