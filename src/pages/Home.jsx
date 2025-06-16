@@ -1,8 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-  getAuth,
-  onAuthStateChanged,
-} from "firebase/auth";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import {
   getDatabase,
   onValue,
@@ -37,7 +34,7 @@ const Home = () => {
     photo: "",
   });
 
-  // ============= user data 
+  // ============= user data
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -95,11 +92,10 @@ const Home = () => {
     });
   }, []);
 
-// =========== data delete
+  // =========== data delete
   const handleDelete = (data) => {
     remove(ref(db, "todolist/" + data.id));
   };
-
 
   const handleSubmitForm = (e) => {
     e.preventDefault();

@@ -5,10 +5,7 @@ import { IoIosEye, IoIosEyeOff } from "react-icons/io";
 import {
   createUserWithEmailAndPassword,
   getAuth,
-  GithubAuthProvider,
-  GoogleAuthProvider,
   sendEmailVerification,
-  // signInWithPopup,
   updateProfile,
 } from "firebase/auth";
 import { toast, ToastContainer } from "react-toastify";
@@ -22,8 +19,6 @@ const Register = () => {
     password: "",
   });
   const auth = getAuth();
-  // const provider = new GoogleAuthProvider();
-  // const githubProvider = new GithubAuthProvider();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -60,26 +55,6 @@ const Register = () => {
         }
       });
   };
-  // ============== google sign up
-  // const handleGoogle = () => {
-  //   signInWithPopup(auth, provider).then(() => {
-  //     navigate("/todo");
-  //   });
-  // };
-
-  // ============= github sign up
-  // const handleGithub = () => {
-  //   signInWithPopup(auth, githubProvider)
-  //     .then(() => {
-  //       navigate("/todo");
-  //     })
-  //     .catch((error) => {
-  //       const errorCode = error.code;
-  //       if (errorCode === "auth/account-exists-with-different-credential") {
-  //         toast.error("This Email is already Exist!");
-  //       }
-  //     });
-  // };
 
   return (
     <div className="h-screen w-dvw flex items-center justify-center bg-[#0F1012] px-50 z-50">
@@ -187,7 +162,8 @@ const Register = () => {
           </button>
           <button
             // onClick={handleGoogle}
-            className="signin mt-4">
+            className="signin mt-4"
+          >
             <svg
               viewBox="0 0 256 262"
               preserveAspectRatio="xMidYMid"

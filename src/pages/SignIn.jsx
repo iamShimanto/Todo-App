@@ -1,20 +1,12 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router";
-import { FaUser, FaEnvelope, FaLock } from "react-icons/fa";
+import { FaEnvelope, FaLock } from "react-icons/fa";
 import { IoIosEye, IoIosEyeOff } from "react-icons/io";
-import {
-  getAuth,
-  GithubAuthProvider,
-  GoogleAuthProvider,
-  signInWithEmailAndPassword,
-  // signInWithPopup,
-} from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { toast, ToastContainer } from "react-toastify";
 
 const SignIn = () => {
   const auth = getAuth();
-  // const provider = new GoogleAuthProvider();
-  // const githubProvider = new GithubAuthProvider();
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(true);
   const [user, setUser] = useState({
@@ -51,42 +43,6 @@ const SignIn = () => {
         }
       });
   };
-
-  // const handleGoogle = () => {
-  //   signInWithPopup(auth, provider)
-  //     .then((result) => {
-  //       const credential = GoogleAuthProvider.credentialFromResult(result);
-  //       const token = credential.accessToken;
-  //       console.log(token);
-  //       const user = result.user;
-  //       console.log(user);
-  //       navigate("/todo");
-  //     })
-  //     .catch((error) => {
-  //       const errorCode = error.code;
-  //       console.log(errorCode);
-
-  //       const email = error.customData.email;
-  //       console.log(email);
-
-  //       const credential = GoogleAuthProvider.credentialFromError(error);
-  //       console.log(credential);
-  //     });
-  // };
-
-  // ============= github sign up
-  // const handleGithub = () => {
-  //   signInWithPopup(auth, githubProvider)
-  //     .then(() => {
-  //       navigate("/todo");
-  //     })
-  //     .catch((error) => {
-  //       const errorCode = error.code;
-  //       if (errorCode === "auth/account-exists-with-different-credential") {
-  //         toast.error("This Email is already Exist!");
-  //       }
-  //     });
-  // };
 
   return (
     <>
@@ -182,7 +138,8 @@ const SignIn = () => {
             </button>
             <button
               // onClick={handleGoogle}
-              className="signin mt-4">
+              className="signin mt-4"
+            >
               <svg
                 viewBox="0 0 256 262"
                 preserveAspectRatio="xMidYMid"
