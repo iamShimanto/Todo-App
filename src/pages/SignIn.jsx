@@ -1,18 +1,22 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router";
+import { Link, Navigate } from "react-router";
 import { FaEnvelope, FaLock } from "react-icons/fa";
 import { IoIosEye, IoIosEyeOff } from "react-icons/io";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { toast, ToastContainer } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import { loggedUser } from "../store/slices/authSlice";
 
 const SignIn = () => {
   const auth = getAuth();
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(true);
   const [user, setUser] = useState({
     email: "",
     password: "",
   });
+
+  const userInfo = useSelector((state) => state.userData.value);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -22,10 +26,8 @@ const SignIn = () => {
         if (res.user.emailVerified === false) {
           toast.error("Email isn't verified!");
         } else {
+          dispatch(loggedUser(res.user));
           toast.success("Sign In Successfull!");
-          setTimeout(() => {
-            navigate("/todo");
-          }, 2000);
         }
       })
       .catch((error) => {
@@ -43,6 +45,10 @@ const SignIn = () => {
         }
       });
   };
+
+  if (userInfo) {
+    return <Navigate to="/" />;
+  }
 
   return (
     <>
