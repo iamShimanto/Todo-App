@@ -1,15 +1,36 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaRegEdit } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { ToastContainer } from "react-toastify";
 import { loggedUser } from "../store/slices/authSlice";
-// import { loggedUser } from "../store/slices/authSlice";
+import { getAuth, updateProfile } from "firebase/auth";
 
 const Profile = () => {
   const dispatch = useDispatch();
+  const auth = getAuth();
+  const navigate = useNavigate()
   const userInfo = useSelector((state) => state.userData.value);
-  console.log(userInfo);
+  const [edit, setEdit] = useState(false);
+  const [editedValue, setEditedValue] = useState({
+    username: "",
+  });
+
+  const handleUpdate = () => {
+    if (editedValue) {
+      updateProfile(auth.currentUser, {
+        displayName: editedValue.username,
+      })
+        .then(() => {
+          dispatch(loggedUser(auth.currentUser));
+          navigate("/profile")
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+    setEdit(false);
+  };
 
   // ============== user logout
   const handleLogout = () => {
@@ -31,13 +52,40 @@ const Profile = () => {
               alt="profile"
             />
 
-            <h2 className="text-3xl text-white font-semibold font-roboto my-5 capitalize flex justify-center items-center gap-2">
-              {userInfo.displayName}
-              <FaRegEdit
-                className="cursor-pointer"
-                // onClick={() => handleEnableEdit(user)}
-              />
-            </h2>
+            {!edit ? (
+              <h2 className="text-3xl text-white font-semibold font-roboto my-5 capitalize flex justify-center items-center gap-2">
+                {userInfo.displayName}
+                <FaRegEdit
+                  className="cursor-pointer"
+                  onClick={() => setEdit(true)}
+                />
+              </h2>
+            ) : (
+              <div className="my-5 flex justify-center items-center">
+                <input
+                  onChange={(e) =>
+                    setEditedValue((prev) => ({
+                      ...prev,
+                      username: e.target.value,
+                    }))
+                  }
+                  className="w-5/10 h-10 border border-white rounded text-center text-white"
+                  type="text"
+                />
+                <button
+                  onClick={handleUpdate}
+                  className="py-2 px-4 bg-green-500 rounded mx-1 cursor-pointer"
+                >
+                  Save
+                </button>
+                <button
+                  onClick={() => setEdit(false)}
+                  className="py-2 px-4 bg-red-500 rounded mx-1 cursor-pointer"
+                >
+                  Cancel
+                </button>
+              </div>
+            )}
 
             <div className="flex justify-center items-center gap-1">
               <button
