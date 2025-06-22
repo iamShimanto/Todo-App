@@ -94,10 +94,10 @@ const Profile = () => {
               >
                 Log Out
               </button>
-              <button className="px-4 py-2 bg-black text-white rounded-lg cursor-pointer hover:bg-white hover:text-black duration-300">
+              <Link to='/reset' className="px-4 py-2 bg-black text-white rounded-lg cursor-pointer hover:bg-white hover:text-black duration-300">
                 Reset Password
-              </button>
-              <button className="px-4 py-2 bg-black text-white rounded-lg cursor-pointer hover:bg-white hover:text-black duration-300">
+              </Link>
+              <button  className="px-4 py-2 bg-black text-white rounded-lg cursor-pointer hover:bg-white hover:text-black duration-300">
                 Delete Account
               </button>
             </div>
