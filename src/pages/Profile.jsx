@@ -2,20 +2,21 @@ import React, { useState } from "react";
 import { FaRegEdit } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router";
-import { ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import { loggedUser } from "../store/slices/authSlice";
-import { getAuth, updateProfile } from "firebase/auth";
+import { deleteUser, getAuth, updateProfile } from "firebase/auth";
 
 const Profile = () => {
   const dispatch = useDispatch();
   const auth = getAuth();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const userInfo = useSelector((state) => state.userData.value);
   const [edit, setEdit] = useState(false);
   const [editedValue, setEditedValue] = useState({
     username: "",
   });
 
+  // ================ user update
   const handleUpdate = () => {
     if (editedValue) {
       updateProfile(auth.currentUser, {
@@ -23,7 +24,7 @@ const Profile = () => {
       })
         .then(() => {
           dispatch(loggedUser(auth.currentUser));
-          navigate("/profile")
+          navigate("/profile");
         })
         .catch((error) => {
           console.log(error);
@@ -35,6 +36,20 @@ const Profile = () => {
   // ============== user logout
   const handleLogout = () => {
     dispatch(loggedUser(null));
+  };
+
+  // ============ user delete
+  const handleDelete = () => {
+    deleteUser(auth.currentUser)
+      .then(() => {
+        toast.success("Account deleted Successfully!");
+        setTimeout(() => {
+          dispatch(loggedUser(null));
+        }, 2000);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
@@ -94,10 +109,16 @@ const Profile = () => {
               >
                 Log Out
               </button>
-              <Link to='/reset' className="px-4 py-2 bg-black text-white rounded-lg cursor-pointer hover:bg-white hover:text-black duration-300">
+              <Link
+                to="/reset"
+                className="px-4 py-2 bg-black text-white rounded-lg cursor-pointer hover:bg-white hover:text-black duration-300"
+              >
                 Reset Password
               </Link>
-              <button  className="px-4 py-2 bg-black text-white rounded-lg cursor-pointer hover:bg-white hover:text-black duration-300">
+              <button
+                onClick={handleDelete}
+                className="px-4 py-2 bg-black text-white rounded-lg cursor-pointer hover:bg-white hover:text-black duration-300"
+              >
                 Delete Account
               </button>
             </div>
